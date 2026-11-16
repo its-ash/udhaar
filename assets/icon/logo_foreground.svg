@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" shape-rendering="crispEdges">
+  <g fill="#FFF4D6">
+    <!-- rupee sign on a 16x16 grid, cell = 64 -->
+    <rect x="192" y="192" width="640" height="64"/>
+    <rect x="704" y="256" width="128" height="128"/>
+    <rect x="192" y="384" width="640" height="64"/>
+    <rect x="192" y="448" width="256" height="64"/>
+    <rect x="256" y="512" width="256" height="64"/>
+    <rect x="320" y="576" width="256" height="64"/>
+    <rect x="384" y="640" width="256" height="64"/>
+    <rect x="448" y="704" width="256" height="64"/>
+    <rect x="512" y="768" width="256" height="64"/>
+  </g>
+</svg>

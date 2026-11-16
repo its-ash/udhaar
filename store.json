@@ -1,0 +1,11 @@
+{
+  "id": "udhaar",
+  "name": "Udhaar",
+  "repo": "its-ash/udhaar",
+  "package": "com.itsash.udhaar",
+  "tagline": "Keep track of who owes you and whom you owe. Send a polite UPI reminder in one tap.",
+  "description": "Udhaar is a simple lending ledger for money you give to or get from friends, family and colleagues. Add people, note what you gave or got with an amount, a note and a date, and see each person's balance and your totals at a glance. Set a due date to get a notification on the day. Send a polite reminder through WhatsApp or any app, with a UPI payment link that has your own UPI ID and the amount. When you owe someone whose UPI ID you saved, pay them with one tap. Settle up clears a balance, and you can export everything as a CSV file. It works fully offline and everything stays on your phone.",
+  "category": "Finance",
+  "icon": "assets/icon/logo-1024.png",
+  "homepage": "https://udhaar.itsash.in/"
+}
