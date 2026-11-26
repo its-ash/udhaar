@@ -43,6 +43,7 @@ class _TxnSheetState extends State<TxnSheet> {
   late DateTime _date = widget.existing?.date ?? DateTime.now();
   late DateTime? _due = widget.existing?.due;
   String? _error;
+  bool _saving = false;
 
   static String _plain(int paise) =>
       paise % 100 == 0 ? '${paise ~/ 100}' : '${paise ~/ 100}.${(paise % 100).toString().padLeft(2, '0')}';
@@ -55,6 +56,7 @@ class _TxnSheetState extends State<TxnSheet> {
   }
 
   Future<void> _save() async {
+    if (_saving) return;
     final paise = parsePaise(_amount.text);
     if (paise == null) {
       setState(() => _error = 'Enter an amount above 0');
@@ -62,31 +64,41 @@ class _TxnSheetState extends State<TxnSheet> {
     }
     final store = widget.store;
     final old = widget.existing;
-    if (old == null) {
-      final notify = _due != null;
-      if (notify) await store.reminders.requestPermission();
-      await store.addTxn(
-        personId: widget.personId,
-        paise: paise,
-        gave: _gave,
-        date: dateOnly(_date),
-        note: _note.text,
-        due: _due,
-      );
-    } else {
-      if (_due != null) await store.reminders.requestPermission();
-      await store.updateTxn(
-        old.copyWith(
+    final note = _note.text;
+    final gave = _gave;
+    final date = dateOnly(_date);
+    final due = _due;
+    setState(() => _saving = true);
+    try {
+      if (due != null) {
+        await store.reminders.requestPermission();
+        if (!mounted) return;
+      }
+      if (old == null) {
+        await store.addTxn(
+          personId: widget.personId,
           paise: paise,
-          gave: _gave,
-          date: dateOnly(_date),
-          note: _note.text.trim(),
-          due: _due,
-          clearDue: _due == null,
-        ),
-      );
+          gave: gave,
+          date: date,
+          note: note,
+          due: due,
+        );
+      } else {
+        await store.updateTxn(
+          old.copyWith(
+            paise: paise,
+            gave: gave,
+            date: date,
+            note: note.trim(),
+            due: due,
+            clearDue: due == null,
+          ),
+        );
+      }
+      if (mounted) Navigator.of(context).pop();
+    } finally {
+      if (mounted) setState(() => _saving = false);
     }
-    if (mounted) Navigator.of(context).pop();
   }
 
   @override
@@ -124,7 +136,7 @@ class _TxnSheetState extends State<TxnSheet> {
           helper: _due == null ? null : 'You will be notified on ${formatDate(_due!)} at 9:00.',
         ),
         const SizedBox(height: UiSpace.sm),
-        UiButton('Save', onPressed: _save),
+        UiButton('Save', loading: _saving, onPressed: _saving ? null : _save),
       ],
     );
   }

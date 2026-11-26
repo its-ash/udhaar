@@ -114,7 +114,8 @@ int? parsePaise(String input) {
   if (s.isEmpty) return null;
   final m = RegExp(r'^(\d+)(?:\.(\d{1,2}))?$').firstMatch(s);
   if (m == null) return null;
-  final rupees = int.parse(m.group(1)!);
+  final rupees = int.tryParse(m.group(1)!);
+  if (rupees == null || rupees > 99999999999999) return null;
   final frac = (m.group(2) ?? '').padRight(2, '0');
   final paise = rupees * 100 + int.parse(frac.isEmpty ? '0' : frac);
   return paise > 0 ? paise : null;

@@ -1,3 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" shape-rendering="crispEdges">
-  <rect x="0" y="0" width="1024" height="1024" fill="#1F6F5C"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+  <linearGradient id="bgGrad" x1="0" y1="0" x2="1024" y2="1024" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#064E3B"/></linearGradient>
+  <radialGradient id="topGlow" cx="260" cy="220" r="680" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#6EE7B7" stop-opacity="0.25"/><stop offset="100%" stop-color="#6EE7B7" stop-opacity="0"/></radialGradient>
+  <radialGradient id="botGlow" cx="780" cy="820" r="520" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#34D399" stop-opacity="0.28"/><stop offset="100%" stop-color="#34D399" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bgGrad)"/>
+  <rect width="1024" height="1024" fill="url(#topGlow)"/>
+  <rect width="1024" height="1024" fill="url(#botGlow)"/>
 </svg>

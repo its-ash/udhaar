@@ -26,12 +26,16 @@ class LedgerStore extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(_key);
     if (raw != null) {
-      final j = jsonDecode(raw) as Map<String, dynamic>;
-      people = [for (final p in (j['people'] as List? ?? [])) Person.fromJson(p as Map<String, dynamic>)];
-      txns = [for (final t in (j['txns'] as List? ?? [])) Txn.fromJson(t as Map<String, dynamic>)];
-      myName = (j['myName'] as String?) ?? '';
-      myVpa = (j['myVpa'] as String?) ?? '';
-      _nextId = (j['nextId'] as int?) ?? 1;
+      try {
+        final j = jsonDecode(raw) as Map<String, dynamic>;
+        final loadedPeople = [for (final p in (j['people'] as List? ?? [])) Person.fromJson(p as Map<String, dynamic>)];
+        final loadedTxns = [for (final t in (j['txns'] as List? ?? [])) Txn.fromJson(t as Map<String, dynamic>)];
+        people = loadedPeople;
+        txns = loadedTxns;
+        myName = (j['myName'] as String?) ?? '';
+        myVpa = (j['myVpa'] as String?) ?? '';
+        _nextId = (j['nextId'] as int?) ?? 1;
+      } catch (_) {}
     }
     ready = true;
     notifyListeners();
